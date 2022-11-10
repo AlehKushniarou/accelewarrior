@@ -8,28 +8,32 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Accelewarrior extends ApplicationAdapter {
-	SpriteBatch batch;
+	private SpriteBatch batch;
 
-	Texture squareImg;
-	Texture circleImg;
-	Texture squareFoeImg;
+	private Texture squareImg;
+	private Texture circleImg;
+	private Texture squareFoeImg;
 
-	Rectangle square;
-	Circle circle;
+	private Rectangle square;
+	private Circle circle;
 
-	Rectangle squareFoe;
+	private Rectangle squareFoe;
 
-	float radius = 50f;
-	float diameter = radius * 2;
-	float halfRadius = radius / 2;
+	private float radius = 50f;
+	private float diameter = radius * 2;
+	private float halfRadius = radius / 2;
 
-	OrthographicCamera camera;
-	int screenWidth = 800;
-	int screenHeight = 480;
+	private OrthographicCamera camera;
+	private int screenWidth = 800;
+	private int screenHeight = 480;
+
+	private int dir = 1;
+	private float time = 1.5f;
 	
 	@Override
 	public void create () {
@@ -81,7 +85,7 @@ public class Accelewarrior extends ApplicationAdapter {
 		square.y -= Gdx.input.getAccelerometerX() * 180 * dt;
 		square.x += Gdx.input.getAccelerometerY() * 180 * dt;
 
-		// make sure the bucket stays within the screen bounds
+		// make sure the square stays within the screen bounds
 		if (square.x < 0) {
 			square.x = 0;
 		}
@@ -93,6 +97,41 @@ public class Accelewarrior extends ApplicationAdapter {
 		}
 		if (square.y > screenHeight - square.getHeight()) {
 			square.y = screenHeight - square.getHeight();
+		}
+
+		time += Gdx.graphics.getDeltaTime();
+		if (time >= 1.5f) {
+			dir = MathUtils.random(1, 4);
+			time = 0f;
+		}
+
+		switch (dir) {
+			case 1 : squareFoe.x += 200 * Gdx.graphics.getDeltaTime();
+				break;
+			case 2 : squareFoe.x -= 200 * Gdx.graphics.getDeltaTime();
+				break;
+			case 3 : squareFoe.y += 200 * Gdx.graphics.getDeltaTime();
+				break;
+			case 4 : squareFoe.y -= 200 * Gdx.graphics.getDeltaTime();
+				break;
+		}
+
+		// make sure the square foe stays within the screen bounds
+		if (squareFoe.x < 0) {
+			squareFoe.x = 0;
+			dir = MathUtils.random(1, 4);
+		}
+		if (squareFoe.x > screenWidth - squareFoe.getWidth()) {
+			squareFoe.x = screenWidth - squareFoe.getWidth();
+			dir = MathUtils.random(1, 4);
+		}
+		if (squareFoe.y < 0) {
+			squareFoe.y = 0;
+			dir = MathUtils.random(1, 4);
+		}
+		if (squareFoe.y > screenHeight - squareFoe.getHeight()) {
+			squareFoe.y = screenHeight - squareFoe.getHeight();
+			dir = MathUtils.random(1, 4);
 		}
 	}
 	
