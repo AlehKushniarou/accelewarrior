@@ -1,10 +1,9 @@
-package accelerometer.warrior;
+package game.accelewarrior;
 
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import accelerometer.warrior.Accelewarrior;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
