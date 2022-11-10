@@ -3,23 +3,39 @@ package game.accelewarrior;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Warrior {
     private Accelewarrior game;
-    private Texture texture;
-    private String texturePath = "square.png";
+    private Texture warriorTexture;
+    private Texture circleTexture;
+    private String textureWarriorPath = "square.png";
+    private String textureCirclePath = "red circle.png";
     private Rectangle square;
+    private Circle circle;
     private int speed = 180;
+    private float radius = 50f;
+    private float diameter = radius * 2;
+    private float halfRadius = radius / 2;
 
     public Warrior(Accelewarrior game) {
         this.game = game;
-        texture = new Texture(texturePath);
+        warriorTexture = new Texture(textureWarriorPath);
+        circleTexture = new Texture(textureCirclePath);
         square = new Rectangle(356, 187, 50, 50);
+        circle = new Circle(356, 187, radius);
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, square.getX(), square.getY(), square.getHeight(), square.getWidth());
+        batch.draw(warriorTexture, square.getX(), square.getY(), square.getHeight(), square.getWidth());
+        if (Gdx.input.isTouched()) {
+            circle.x = square.x - halfRadius;
+            circle.y = square.y - halfRadius;
+            batch.draw(circleTexture, square.x - halfRadius,
+                    square.y - halfRadius,
+                    diameter, diameter);
+        }
     }
 
     public void update() {
@@ -40,16 +56,17 @@ public class Warrior {
             square.y = game.getScreenHeight() - square.getHeight();
         }
 
-        if (square.overlaps(game.getSquareFoe())) {
+        if (square.overlaps(game.getFoe().getSquareFoe())) {
             square.setX(356);
             square.setY(187);
-            game.getSquareFoe().setX(700);
-            game.getSquareFoe().setY(70);
+            game.getFoe().getSquareFoe().setX(700);
+            game.getFoe().getSquareFoe().setY(70);
         }
     }
 
     public void dispose() {
-        texture.dispose();
+        warriorTexture.dispose();
+        circleTexture.dispose();
     }
 
     public Rectangle getSquare() {
