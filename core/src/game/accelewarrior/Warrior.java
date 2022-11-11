@@ -19,7 +19,8 @@ public class Warrior {
     private float radius = 50f;
     private float diameter = radius * 2;
     private float halfRadius = radius / 2;
-    private float time = 1.0f;
+    private float timeOfAttack = 1.0f;
+    private float timeBetweenAttacks = 1.1f;
 
     public Warrior(Accelewarrior game) {
         this.game = game;
@@ -31,17 +32,20 @@ public class Warrior {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(warriorTexture, square.getX(), square.getY(), square.getHeight(), square.getWidth());
-        if (Gdx.input.justTouched()) {
-            time = Gdx.graphics.getDeltaTime();
+        batch.draw(warriorTexture, square.getX(), square.getY(),
+                square.getHeight(), square.getWidth());
+        timeBetweenAttacks += Gdx.graphics.getDeltaTime();
+        if (Gdx.input.justTouched() && timeBetweenAttacks > 0.5f) {
+            timeOfAttack = Gdx.graphics.getDeltaTime();
         }
-        if (time < 0.2f){
-            time += Gdx.graphics.getDeltaTime();
+        if (timeOfAttack < 0.2f){
+            timeOfAttack += Gdx.graphics.getDeltaTime();
             circle.x = square.x + square.getWidth() / 2;
             circle.y = square.y + square.getHeight() / 2;
             batch.draw(circleTexture, square.x - halfRadius,
                     square.y - halfRadius,
                     diameter, diameter);
+            timeBetweenAttacks = 0;
         }
     }
 
