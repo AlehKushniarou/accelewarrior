@@ -15,7 +15,7 @@ public class Warrior {
     private String textureCirclePath = "red circle.png";
     private Rectangle square;
     private Circle circle;
-    private int speed = 180;
+    private int speed = 300;
     private float radius = 50f;
     private float diameter = radius * 2;
     private float halfRadius = radius / 2;
@@ -27,8 +27,7 @@ public class Warrior {
         warriorTexture = new Texture(textureWarriorPath);
         circleTexture = new Texture(textureCirclePath);
         square = new Rectangle(356, 187, 50, 50);
-        circle = new Circle();
-        circle.radius = radius;
+        circle = new Circle(-100, -100, radius);
     }
 
     public void render(SpriteBatch batch) {
@@ -46,6 +45,9 @@ public class Warrior {
                     square.y - halfRadius,
                     diameter, diameter);
             timeBetweenAttacks = 0;
+        } else {
+            circle.x = -100;
+            circle.y = -100;
         }
     }
 
@@ -66,20 +68,6 @@ public class Warrior {
         if (square.y > game.getScreenHeight() - square.getHeight()) {
             square.y = game.getScreenHeight() - square.getHeight();
         }
-
-        if (square.overlaps(game.getFoe().getSquareFoe())) {
-            square.setX(356);
-            square.setY(187);
-            game.getFoe().getSquareFoe().setX(700);
-            game.getFoe().getSquareFoe().setY(70);
-        }
-
-        if (Intersector.overlaps(circle, game.getFoe().getSquareFoe())) {
-            square.setX(356);
-            square.setY(187);
-            game.getFoe().getSquareFoe().setX(700);
-            game.getFoe().getSquareFoe().setY(70);
-        }
     }
 
     public void dispose() {
@@ -89,5 +77,9 @@ public class Warrior {
 
     public Rectangle getSquare() {
         return square;
+    }
+
+    public Circle getCircle() {
+        return circle;
     }
 }

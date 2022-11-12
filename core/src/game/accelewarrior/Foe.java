@@ -11,7 +11,7 @@ public class Foe {
     private Texture texture;
     private String texturePath = "square foe.png";
     private Rectangle squareFoe;
-    private int speed = 200;
+    private int speed = 350;
     private int dir = 1;
     private float time = 1.5f;
 
@@ -26,7 +26,7 @@ public class Foe {
                 squareFoe.getHeight(), squareFoe.getWidth());
     }
 
-    public void update () {
+    public void update() {
         float dt = Gdx.graphics.getDeltaTime();
 
         time += Gdx.graphics.getDeltaTime();
@@ -36,13 +36,17 @@ public class Foe {
         }
 
         switch (dir) {
-            case 1 : squareFoe.x += speed * dt;
+            case 1:
+                squareFoe.x += speed * dt;
                 break;
-            case 2 : squareFoe.x -= speed * dt;
+            case 2:
+                squareFoe.x -= speed * dt;
                 break;
-            case 3 : squareFoe.y += speed * dt;
+            case 3:
+                squareFoe.y += speed * dt;
                 break;
-            case 4 : squareFoe.y -= speed * dt;
+            case 4:
+                squareFoe.y -= speed * dt;
                 break;
         }
 
