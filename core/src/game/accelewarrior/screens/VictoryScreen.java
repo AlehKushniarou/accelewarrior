@@ -13,6 +13,8 @@ public class VictoryScreen implements Screen {
 
     private OrthographicCamera camera;
 
+    private float timer = 0.5f;
+
     public VictoryScreen(Accelewarrior game) {
         this.game = game;
 
@@ -32,6 +34,8 @@ public class VictoryScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0.58f, 0.9f, 1f, 0);
 
+        timer -= Gdx.graphics.getDeltaTime();
+
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -40,7 +44,7 @@ public class VictoryScreen implements Screen {
                 game.getScreenWidth() / 25.0f, game.getScreenHeight() / 1.3f);
         game.getBatch().end();
 
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched() && timer < 0.0f) {
             game.setScreen(new GameScreen(game));
             dispose();
         }
