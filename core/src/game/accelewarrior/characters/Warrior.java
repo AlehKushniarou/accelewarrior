@@ -1,4 +1,4 @@
-package game.accelewarrior;
+package game.accelewarrior.characters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+
+import game.accelewarrior.Accelewarrior;
 
 public class Warrior {
     private Accelewarrior game;
@@ -21,6 +23,7 @@ public class Warrior {
     private float halfRadius = radius / 2;
     private float timeOfAttack = 1.0f;
     private float timeBetweenAttacks = 1.1f;
+    private boolean dead = false;
 
     public Warrior(Accelewarrior game) {
         this.game = game;
@@ -81,5 +84,13 @@ public class Warrior {
 
     public Circle getCircle() {
         return circle;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 }
