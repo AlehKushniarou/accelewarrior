@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import game.accelewarrior.Accelewarrior;
 
@@ -14,13 +15,18 @@ public class Foe {
     private String texturePath = "square foe.png";
     private Rectangle squareFoe;
     private int speed = 350;
-    private int dir = 1;
-    private float time = 1.5f;
+    private float timer = 1.5f;
+    private Vector2 position;
+    private Vector2 direction;
 
     public Foe(Accelewarrior game) {
         this.game = game;
         texture = new Texture(texturePath);
-        squareFoe = new Rectangle(700, 70, 50, 50);
+        float x = MathUtils.random(0, game.getScreenWidth());
+        float y = MathUtils.random(0, game.getScreenHeight());
+        position = new Vector2(x, y);
+        direction = new Vector2(x, y).nor();
+        squareFoe = new Rectangle(position.x, position.y, 50.0f, 50.0f);
     }
 
     public void render(SpriteBatch batch) {
@@ -31,42 +37,33 @@ public class Foe {
     public void update() {
         float dt = Gdx.graphics.getDeltaTime();
 
-        time += Gdx.graphics.getDeltaTime();
-        if (time >= 1.5f) {
-            dir = MathUtils.random(1, 4);
-            time = 0f;
+        position.mulAdd(direction, speed * dt);
+
+        timer -= dt;
+        if (timer < 0.0f) {
+            timer = MathUtils.random(1.0f, 4.0f);
+            direction.set(MathUtils.random(-1.0f, 1.0f), MathUtils.random(-1.0f, 1.0f));
+            direction.nor();
         }
 
-        switch (dir) {
-            case 1:
-                squareFoe.x += speed * dt;
-                break;
-            case 2:
-                squareFoe.x -= speed * dt;
-                break;
-            case 3:
-                squareFoe.y += speed * dt;
-                break;
-            case 4:
-                squareFoe.y -= speed * dt;
-                break;
-        }
+        squareFoe.x = position.x;
+        squareFoe.y = position.y;
 
         if (squareFoe.x < 0) {
             squareFoe.x = 0;
-            dir = MathUtils.random(1, 4);
+            direction.set(MathUtils.random(0.0f, 1.0f), MathUtils.random(-1.0f, 1.0f));
         }
         if (squareFoe.x > game.getScreenWidth() - squareFoe.getWidth()) {
             squareFoe.x = game.getScreenWidth() - squareFoe.getWidth();
-            dir = MathUtils.random(1, 4);
+            direction.set(MathUtils.random(-1.0f, 0.0f), MathUtils.random(-1.0f, 1.0f));
         }
         if (squareFoe.y < 0) {
             squareFoe.y = 0;
-            dir = MathUtils.random(1, 4);
+            direction.set(MathUtils.random(-1.0f, 1.0f), MathUtils.random(0.0f, 1.0f));
         }
         if (squareFoe.y > game.getScreenHeight() - squareFoe.getHeight()) {
             squareFoe.y = game.getScreenHeight() - squareFoe.getHeight();
-            dir = MathUtils.random(1, 4);
+            direction.set(MathUtils.random(-1.0f, 1.0f), MathUtils.random(-1.0f, 0.0f));
         }
     }
 

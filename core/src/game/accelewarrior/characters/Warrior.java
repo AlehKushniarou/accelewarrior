@@ -29,8 +29,8 @@ public class Warrior {
         this.game = game;
         warriorTexture = new Texture(textureWarriorPath);
         circleTexture = new Texture(textureCirclePath);
-        square = new Rectangle(356, 187, 50, 50);
-        circle = new Circle(-100, -100, radius);
+        square = new Rectangle(356.0f, 187.0f, 50.0f, 50.0f);
+        circle = new Circle(-100.0f, -100.0f, radius);
     }
 
     public void render(SpriteBatch batch) {
