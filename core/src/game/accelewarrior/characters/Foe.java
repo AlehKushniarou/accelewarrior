@@ -1,13 +1,16 @@
 package game.accelewarrior.characters;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 import game.accelewarrior.Accelewarrior;
+import game.accelewarrior.screens.GameScreen;
 
 public class Foe {
     private Accelewarrior game;
@@ -18,6 +21,7 @@ public class Foe {
     private float timer = 1.5f;
     private Vector2 position;
     private Vector2 direction;
+    private float size = 50.0f;
 
     public Foe(Accelewarrior game) {
         this.game = game;
@@ -26,7 +30,7 @@ public class Foe {
         float y = MathUtils.random(0, game.getScreenHeight());
         position = new Vector2(x, y);
         direction = new Vector2(x, y).nor();
-        squareFoe = new Rectangle(position.x, position.y, 50.0f, 50.0f);
+        squareFoe = new Rectangle(position.x, position.y, size, size);
     }
 
     public void render(SpriteBatch batch) {
@@ -49,6 +53,7 @@ public class Foe {
         squareFoe.x = position.x;
         squareFoe.y = position.y;
 
+        //Check screen bounds
         if (squareFoe.x < 0) {
             squareFoe.x = 0;
             direction.set(MathUtils.random(0.0f, 1.0f), MathUtils.random(-1.0f, 1.0f));
@@ -73,5 +78,13 @@ public class Foe {
 
     public Rectangle getSquareFoe() {
         return squareFoe;
+    }
+
+    public Vector2 getDirection() {
+        return direction;
+    }
+
+    public void setDirection(float x, float y) {
+        direction.set(x, y);
     }
 }

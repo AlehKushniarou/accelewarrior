@@ -89,6 +89,13 @@ public class GameScreen implements Screen {
                 foe.getSquareFoe().y = negativeY;
                 foe.dispose();
             }
+
+            for (int i = 0; i < foes.size; i++) {
+                Foe foe2 = foes.get(i);
+                if (foe != foe2 && foe.getSquareFoe().overlaps(foe2.getSquareFoe())) {
+                    foe.setDirection(-foe.getDirection().x, -foe.getDirection().y);
+                }
+            }
         }
     }
 
