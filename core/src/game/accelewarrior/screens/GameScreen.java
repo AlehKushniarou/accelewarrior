@@ -84,14 +84,15 @@ public class GameScreen implements Screen {
             foe.update();
 
             if (warrior.getSquare().overlaps(foe.getSquareFoe())) {
-                warrior.setDead(true);
+                if (foe instanceof ChangingColorFoe && !((ChangingColorFoe) foe).isChangeColor()) {
+                    killFoe(foe);
+                } else {
+                    warrior.setDead(true);
+                }
             }
 
             if (Intersector.overlaps(warrior.getCircle(), foe.getSquareFoe())) {
-                foes.removeValue(foe, true);
-                foe.getSquareFoe().x = negativeX;
-                foe.getSquareFoe().y = negativeY;
-                foe.dispose();
+                killFoe(foe);
             }
 
             for (int i = 0; i < foes.size; i++) {
@@ -101,6 +102,13 @@ public class GameScreen implements Screen {
                 }
             }
         }
+    }
+
+    private void killFoe(Foe foe) {
+        foes.removeValue(foe, true);
+        foe.getSquareFoe().x = negativeX;
+        foe.getSquareFoe().y = negativeY;
+        foe.dispose();
     }
 
     @Override
