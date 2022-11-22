@@ -63,6 +63,8 @@ public abstract class Foe {
         }
     }
 
+    public abstract void dispose();
+
     public Rectangle getSquareFoe() {
         return squareFoe;
     }

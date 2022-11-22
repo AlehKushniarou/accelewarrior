@@ -24,6 +24,7 @@ public class SimpleFoe extends Foe{
                 squareFoe.getHeight(), squareFoe.getWidth());
     }
 
+    @Override
     public void dispose() {
         texture.dispose();
     }

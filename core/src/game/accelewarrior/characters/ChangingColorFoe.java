@@ -46,6 +46,7 @@ public class ChangingColorFoe extends Foe{
         colorTimer -= Gdx.graphics.getDeltaTime();
     }
 
+    @Override
     public void dispose() {
         texture.dispose();
         secondTexture.dispose();
