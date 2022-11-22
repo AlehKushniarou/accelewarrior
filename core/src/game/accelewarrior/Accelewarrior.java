@@ -1,19 +1,10 @@
 package game.accelewarrior;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ScreenUtils;
 
-import game.accelewarrior.characters.Foe;
-import game.accelewarrior.characters.Warrior;
-import game.accelewarrior.screens.LossScreen;
 import game.accelewarrior.screens.MainMenuScreen;
-import game.accelewarrior.screens.VictoryScreen;
 
 public class Accelewarrior extends Game {
     private SpriteBatch batch;

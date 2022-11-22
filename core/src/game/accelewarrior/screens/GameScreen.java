@@ -7,7 +7,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import game.accelewarrior.Accelewarrior;
-import game.accelewarrior.characters.Foe;
+import game.accelewarrior.characters.ChangingColorFoe;
+import game.accelewarrior.characters.SimpleFoe;
 import game.accelewarrior.characters.Warrior;
 
 public class GameScreen implements Screen {
@@ -15,7 +16,8 @@ public class GameScreen implements Screen {
 
     private Warrior warrior;
 
-    private Array<Foe> foes;
+    private Array<SimpleFoe> foes;
+    private Array<ChangingColorFoe> colorFoes;
 
     private int negativeX = -100;
     private int negativeY = -100;
@@ -28,14 +30,18 @@ public class GameScreen implements Screen {
         warrior = new Warrior(game);
 
         foes = new Array<>();
-        foes.add(new Foe(game));
-        foes.add(new Foe(game));
-        foes.add(new Foe(game));
-        foes.add(new Foe(game));
-        foes.add(new Foe(game));
-        foes.add(new Foe(game));
-        foes.add(new Foe(game));
+        foes.add(new SimpleFoe(game));
+        foes.add(new SimpleFoe(game));
+        foes.add(new SimpleFoe(game));
+        foes.add(new SimpleFoe(game));
+        foes.add(new SimpleFoe(game));
+        foes.add(new SimpleFoe(game));
+        foes.add(new SimpleFoe(game));
 
+        colorFoes = new Array<>();
+        colorFoes.add(new ChangingColorFoe(game));
+        colorFoes.add(new ChangingColorFoe(game));
+        colorFoes.add(new ChangingColorFoe(game));
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, game.getScreenWidth(), game.getScreenHeight());
@@ -57,8 +63,11 @@ public class GameScreen implements Screen {
 
         game.getBatch().begin();
         warrior.render(game.getBatch());
-        for (Foe foe : foes) {
+        for (SimpleFoe foe : foes) {
             foe.render(game.getBatch());
+        }
+        for (ChangingColorFoe colorFoe : colorFoes) {
+            colorFoe.render(game.getBatch());
         }
         game.getBatch().end();
 
@@ -76,7 +85,7 @@ public class GameScreen implements Screen {
     private void update() {
         warrior.update();
 
-        for (Foe foe : foes) {
+        for (SimpleFoe foe : foes) {
             foe.update();
 
             if (warrior.getSquare().overlaps(foe.getSquareFoe())) {
@@ -91,11 +100,14 @@ public class GameScreen implements Screen {
             }
 
             for (int i = 0; i < foes.size; i++) {
-                Foe foe2 = foes.get(i);
+                SimpleFoe foe2 = foes.get(i);
                 if (foe != foe2 && foe.getSquareFoe().overlaps(foe2.getSquareFoe())) {
                     foe.setDirection(-foe.getDirection().x, -foe.getDirection().y);
                 }
             }
+        }
+        for (ChangingColorFoe colorFoe : colorFoes) {
+            colorFoe.update();
         }
     }
 
@@ -122,7 +134,7 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         warrior.dispose();
-        for (Foe foe : foes) {
+        for (SimpleFoe foe : foes) {
             foe.dispose();
         }
     }

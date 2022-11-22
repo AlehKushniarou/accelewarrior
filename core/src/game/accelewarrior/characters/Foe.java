@@ -1,31 +1,25 @@
 package game.accelewarrior.characters;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 
 import game.accelewarrior.Accelewarrior;
-import game.accelewarrior.screens.GameScreen;
 
-public class Foe {
-    private Accelewarrior game;
-    private Texture texture;
-    private String texturePath = "square foe.png";
-    private Rectangle squareFoe;
-    private int speed = 350;
-    private float timer = 1.5f;
-    private Vector2 position;
-    private Vector2 direction;
-    private float size = 50.0f;
+public abstract class Foe {
+    protected Accelewarrior game;
+    protected Rectangle squareFoe;
+    protected Vector2 position;
+    protected Vector2 direction;
+    protected int speed = 350;
+    protected float timer = 1.5f;
+    protected float size = 50.0f;
 
     public Foe(Accelewarrior game) {
         this.game = game;
-        texture = new Texture(texturePath);
         float x = MathUtils.random(0, game.getScreenWidth());
         float y = MathUtils.random(0, game.getScreenHeight());
         position = new Vector2(x, y);
@@ -33,10 +27,7 @@ public class Foe {
         squareFoe = new Rectangle(position.x, position.y, size, size);
     }
 
-    public void render(SpriteBatch batch) {
-        batch.draw(texture, squareFoe.getX(), squareFoe.getY(),
-                squareFoe.getHeight(), squareFoe.getWidth());
-    }
+    public abstract void render(SpriteBatch batch);
 
     public void update() {
         float dt = Gdx.graphics.getDeltaTime();
@@ -70,10 +61,6 @@ public class Foe {
             squareFoe.y = game.getScreenHeight() - squareFoe.getHeight();
             direction.set(MathUtils.random(-1.0f, 1.0f), MathUtils.random(-1.0f, 0.0f));
         }
-    }
-
-    public void dispose() {
-        texture.dispose();
     }
 
     public Rectangle getSquareFoe() {
